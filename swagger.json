@@ -1,0 +1,163 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Restaurant - OpenAPI",
+    "description": "Restaurant API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api"
+    }
+  ],
+  "paths": {
+    "/orders": {
+      "post": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Add a new order",
+        "description": "Add a new order (customer details and ordered items)",
+        "requestBody": {
+          "description": "Create a new order",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "A new order was added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Get all orders from the last day",
+        "description": "Get all orders from the last day (from 00:00 today to current time)",
+        "responses": {
+          "200": {
+            "description": "All orders from the last day were received successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateOrderRequest": {
+        "type": "object",
+        "properties": {
+          "customerName": {
+            "type": "string",
+            "example": "Nick Cave"
+          },
+          "customerPhone": {
+            "type": "string",
+            "example": "053-1234567"
+          },
+          "customerAddress": {
+            "type": "string",
+            "example": "Rothschild 24/3, Tel Aviv"
+          },
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
+          }
+        },
+        "required": [
+          "customerName",
+          "customerPhone",
+          "customerAddress",
+          "orderItems"
+        ]
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "customerName": {
+            "type": "string",
+            "example": "Nick Cave"
+          },
+          "customerPhone": {
+            "type": "string",
+            "example": "053-1234567"
+          },
+          "customerAddress": {
+            "type": "string",
+            "example": "Rothschild 24/3, Tel Aviv"
+          },
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
+          },
+          "totalCost": {
+            "type": "integer",
+            "example": "240"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Item": {
+        "type": "object",
+        "properties": {
+          "itemName": {
+            "type": "string",
+            "example": "Hamburger"
+          },
+          "itemPrice": {
+            "type": "integer",
+            "example": 60
+          }
+        },
+        "required": [
+          "itemName",
+          "itemPrice"
+        ]
+      }
+    }
+  }
+}
