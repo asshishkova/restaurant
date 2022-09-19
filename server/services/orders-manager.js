@@ -1,7 +1,16 @@
 const { Order } = require('../db/models');
+const { Op } = require('sequelize');
 
 async function getLastDayOrders() {
-  return await Order.findAll();
+  const minOrderTime = new Date();
+  minOrderTime.setDate(minOrderTime.getDate() - 1);
+  return await Order.findAll({
+    where: {
+      createdAt: {
+        [Op.gte]: minOrderTime
+      }
+    },
+  });
 }
 
 async function postNewOrder(body) {
