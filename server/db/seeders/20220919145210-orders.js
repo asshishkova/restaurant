@@ -9,19 +9,25 @@ function randomInt(min, max) {
 module.exports = {
   async up (queryInterface, Sequelize) {
     const ordersJSON = [];
+    let dates = [];
+    for (let i = 0; i < 10; i++) {
+      dates.push((i < 5) ? faker.date.past() : faker.date.recent());
+    }
+    dates = dates.sort((date1, date2) => date1 - date2);
     for(let i = 0; i < 10; i++){
-      // const date = faker.date.recent();
-      const date = (i % 2 === 1) ? faker.date.past() : faker.date.recent();
-      // if (i % 2 === 1) date. setDate(date. getDate() - randomInt(1, 3));
-      const price = randomInt(40, 120);
+      const priceDish = randomInt(40, 120);
+      const priceDrink = randomInt(10, 50);
       ordersJSON.push({
         customerName: faker.name.firstName(),
-        customerPhone: faker.phone.phoneNumber(),
-        customerAddress: `${faker.address.streetAddress()}, ${faker.address.secondaryAddress()}`,
-        orderItems: JSON.stringify([{ itemName: "random dish", itemPrice: price }]),
-        totalCost: price,
-        createdAt: date,
-        updatedAt: date
+        customerPhone: faker.phone.phoneNumber('+972-5#-###-##-##'),
+        customerAddress: faker.address.streetAddress(true),
+        orderItems: JSON.stringify([
+          { itemName: "random dish", itemPrice: priceDish },
+          { itemName: "random drink", itemPrice: priceDrink }
+        ]),
+        totalCost: priceDish + priceDrink,
+        createdAt: dates[i],
+        updatedAt: dates[i]
       });
     }
     await queryInterface.bulkInsert('Orders', ordersJSON, {});
