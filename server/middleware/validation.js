@@ -11,7 +11,7 @@ function validateSchema(schema) {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       const errorsMessages = Error(errors.array().map(value => value.msg).join(", "));
-      console.log(errorsMessages);
+      // console.log(errorsMessages);
       return res.status(400).json({ errors: errors.mapped() })
     }
     next();

@@ -1,7 +1,10 @@
 {
   "scripts": {
     "start": "node server.js",
-    "test": "jest --detectOpenHandles"
+    "test": "NODE_ENV=test jest --testTimeout=10000 --detectOpenHandles",
+    "pretest": "NODE_ENV=test npm run db:reset",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db:create:test": "NODE_ENV=test npx sequelize-cli db:create"
   },
   "jest": {
     "testEnvironment": "node",

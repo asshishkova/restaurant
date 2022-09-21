@@ -41,3 +41,5 @@
 7. In the main folder run `npm start`.
 8. Open `http://localhost:3000/api-docs/` and you will see the api description. You can use "try it out" and "execute" buttons. The are curl commands and request details as well.
 9. To run the unit tests stop the server and run `npm test`.
+
+`npm run db:create:test`
