@@ -36,7 +36,7 @@
 3. Open the project. In the main folder run this command: `npm install`
 
 4. To run the migration, run this command: `npm run db:migrate`
-5. If you want to check manually how the program works with existing orders, run this command: `npm run db:seed:all`.
+5. If you want to check manually how the program works with existing orders, run this command: `npm run db:seed`.
 6. In the main folder run `npm start`.
 7. Open `http://localhost:3000/api-docs/` and you will see the api description. You can use "try it out" and "execute" buttons. The are curl commands and request details as well.
 8. To run the unit tests run `npm test` in the main folder.

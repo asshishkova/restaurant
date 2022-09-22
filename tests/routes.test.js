@@ -227,7 +227,7 @@ describe('Orders endpoints', () => {
     expect(res.body).not.toHaveProperty('extraProperty');
   });
 
-  it('should create an order ignoring extra fields in the orderItems object', async () => {
+  it('should create an order ignoring extra fields in the order item', async () => {
     const res = await request(app)
     .post('/api/orders')
     .send({...newOrder, orderItems: [
@@ -239,6 +239,20 @@ describe('Orders endpoints', () => {
     ]});
     expect(res.statusCode).toEqual(201);
     expect(res.body.orderItems[0]).not.toHaveProperty('extraProperty');
+  });
+
+  it('should not create an order with unexpected elements in the orderItems array', async () => {
+    const res = await request(app)
+    .post('/api/orders')
+    .send({...newOrder, orderItems: [
+      {
+        itemName: 'Hamburger',
+        itemPrice: 50
+      },
+      123
+    ]});
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty('errors');
   });
 
 })
