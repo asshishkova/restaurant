@@ -2,22 +2,6 @@ const request = require('supertest')
 const app = require('../app')
 
 describe('Orders endpoints', () => {
-  let server, agent;
-
-  beforeEach((done) => {
-    server = app.listen(4000, (err) => {
-      if (err) {
-        return done(err);
-      }
-      agent = request.agent(server);
-      done();
-    });
-  });
-
-  afterEach((done) => {
-    return server && server.close(done);
-  });
-
   const newOrder = {
     customerName: 'Nick Cave',
     customerPhone: '053-1234567',
@@ -43,14 +27,14 @@ describe('Orders endpoints', () => {
   const notCreateWithoutProperty = async (property, errorMessage) => {
     const badNewOrder = {...newOrder};
     delete badNewOrder[property];
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send(badNewOrder);
     expectPropertyError(res, property, errorMessage);
   }
 
   it('should get orders from the last 24 hours (from seeds: 5 orders with ids 6-10)', async () => {
-    const res = await agent
+    const res = await request(app)
       .get('/api/orders');
     expect(res.statusCode).toEqual(200);
     expect(res.body.length).toEqual(5);
@@ -61,7 +45,7 @@ describe('Orders endpoints', () => {
   });
 
   it('should get orders ordered by createdAt descendingly', async () => {
-    const res = await agent
+    const res = await request(app)
       .get('/api/orders');
     expect(res.statusCode).toEqual(200);
 
@@ -71,7 +55,7 @@ describe('Orders endpoints', () => {
   });
 
   it('should create a new order', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send(newOrder);
     expect(res.statusCode).toEqual(201);
@@ -83,14 +67,14 @@ describe('Orders endpoints', () => {
   });
 
   it('should not create an order with a wrong type of customerName', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, customerName: 123});
     expectPropertyError(res, 'customerName', 'A customer name should be a string');
   });
 
   it('should not create an order with a short customerName', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, customerName: 'N'});
     expectPropertyError(res, 'customerName', 'A customer name should be at least 2 characters long');
@@ -101,14 +85,14 @@ describe('Orders endpoints', () => {
   });
 
   it('should not create an order with a short customerPhone', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, customerPhone: '123'});
     expectPropertyError(res, 'customerPhone', 'A customer phone should be at least 4 characters long');
   });
 
   it('should not create an order with a wrong type of customerPhone', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, customerPhone: 123456});
     expectPropertyError(res, 'customerPhone', 'A customer phone should be a string');
@@ -117,14 +101,14 @@ describe('Orders endpoints', () => {
   it('should create an order without a customerAddress', async () => {
     const noAddressOrder = {...newOrder};
     delete noAddressOrder.customerAddress;
-    const res = await agent
+    const res = await request(app)
     .post('/api/orders')
     .send(newOrder);
     expect(res.statusCode).toEqual(201);
   });
 
   it('should not create an order with a wrong type of customerAddress', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, customerAddress: 25});
     expectPropertyError(res, 'customerAddress', 'A customer address should be a string');
@@ -135,21 +119,21 @@ describe('Orders endpoints', () => {
   });
 
   it('should not create an order with a wrong type of orderItems', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, orderItems: 'items'});
     expectPropertyError(res, 'orderItems', 'Order items should be an array');
   });
 
   it('should not create an order with an empty orderItems array', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, orderItems: []});
     expectPropertyError(res, 'orderItems', 'Order items should contain at least 1 order item');
   });
 
   it('should not create an order item without an itemName', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, orderItems: [
         {
@@ -160,7 +144,7 @@ describe('Orders endpoints', () => {
   });
 
   it('should not create an order item with a wrong type of itemName', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, orderItems: [
         {
@@ -172,7 +156,7 @@ describe('Orders endpoints', () => {
   });
 
   it('should not create an order with a short itemName', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, orderItems: [
         {
@@ -184,7 +168,7 @@ describe('Orders endpoints', () => {
   });
 
   it('should not create an order item without an itemPrice', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, orderItems: [
         {
@@ -195,7 +179,7 @@ describe('Orders endpoints', () => {
   });
 
   it('should not create an order item with a wrong type of itemPrice', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, orderItems: [
         {
@@ -207,7 +191,7 @@ describe('Orders endpoints', () => {
   });
 
   it('should create an order item with a string type of itemPrice if it can be converted to integer', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, orderItems: [
         {
@@ -224,7 +208,7 @@ describe('Orders endpoints', () => {
   });
 
   it('should not create an order item  with a wrong value of itemPrice', async () => {
-    const res = await agent
+    const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, orderItems: [
         {
@@ -235,20 +219,8 @@ describe('Orders endpoints', () => {
     expectPropertyError(res, 'orderItems[0].itemPrice', 'An item price should be an integer between 0 and 1000');
   });
 
-  // it('should not create an order with a short itemName', async () => {
-  //   const res = await agent
-  //     .post('/api/orders')
-  //     .send({...newOrder, orderItems: [
-  //       {
-  //         itemName: "Te",
-  //         itemPrice: 50
-  //       }
-  //     ]});
-  //   expectPropertyError(res, 'orderItems[0].itemName', 'An item name should be at least 2 characters long');
-  // });
-
   it('should create an order ignoring extra fields in the body', async () => {
-    const res = await agent
+    const res = await request(app)
     .post('/api/orders')
     .send({...newOrder, extraProperty: 'something'});
     expect(res.statusCode).toEqual(201);
@@ -256,7 +228,7 @@ describe('Orders endpoints', () => {
   });
 
   it('should create an order ignoring extra fields in the orderItems object', async () => {
-    const res = await agent
+    const res = await request(app)
     .post('/api/orders')
     .send({...newOrder, orderItems: [
       {
