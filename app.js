@@ -1,6 +1,7 @@
 const express = require('express');
-const requestLoggerMiddleware = require('./server/middleware/request-logger.js');
-const responseLoggerMiddleware = require('./server/middleware/response-logger.js');
+const responseBodyMiddleware = require('./server/middleware/response-body.js');
+const lastModifiedMiddleware = require('./server/middleware/last-modified.js');
+const loggerMiddleware = require('./server/middleware/logger.js');
 
 const ordersRouter = require('./server/routes/orders-router');
 const app = express();
@@ -9,11 +10,11 @@ const swaggerDocument = require('./swagger.json');
 
 app.use([
   express.json(),
-  // requestLoggerMiddleware,
-  // responseLoggerMiddleware,
+  responseBodyMiddleware,
+  lastModifiedMiddleware,
 ]);
 
-app.use('/api', ordersRouter);
+app.use('/api', loggerMiddleware, ordersRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;

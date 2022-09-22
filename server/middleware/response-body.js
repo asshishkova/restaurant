@@ -1,4 +1,4 @@
-function responseLoggerMiddleware(req, res, next) {
+function responseBodyMiddleware(req, res, next) {
   const oldWrite = res.write;
   const oldEnd = res.end;
   const chunks = [];
@@ -15,16 +15,13 @@ function responseLoggerMiddleware(req, res, next) {
     let body;
     try {
       body = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+      res.__custombody__ = body;
     } catch (error) {
       body = {};
     }
     oldEnd.apply(res, arguments);
-
-    console.log('Response status:', res.statusCode, res.statusMessage);
-    console.log('Response:', JSON.stringify(body, null, 2));
   };
-
   next();
 }
 
-module.exports = responseLoggerMiddleware;
+module.exports = responseBodyMiddleware;
