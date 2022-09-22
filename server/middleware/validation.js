@@ -23,8 +23,8 @@ const createOrderSchema = {
       errorMessage: 'A customer name should be a string'
     },
     isLength: {
-      errorMessage: 'A customer name should be at least 2 characters long',
-      options: { min: 2 },
+      errorMessage: 'A customer name should be at least 3 characters long',
+      options: { min: 3 },
     },
     in: ['body']
   },
@@ -62,8 +62,8 @@ const createOrderSchema = {
       errorMessage: 'An item name should be a string'
     },
     isLength: {
-      errorMessage: 'An item name should be at least 3 characters long',
-      options: { min: 3 },
+      errorMessage: 'An item name should be at least 2 characters long',
+      options: { min: 2 },
     },
     in: ['body']
   },

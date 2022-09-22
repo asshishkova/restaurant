@@ -160,7 +160,7 @@ describe('Orders endpoints', () => {
       .post('/api/orders')
       .send({...newOrder, orderItems: [
         {
-          itemName: "Te",
+          itemName: "T",
           itemPrice: 50
         }
       ]});

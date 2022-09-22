@@ -4,11 +4,11 @@
 
 - Orders are saved as a table in mySQL database. Each order contains:
   - `id`: integer, created automatically
-  - `customerName`: string, at least 2 characters long,
+  - `customerName`: string, at least 3 characters long,
   - `customerPhone`: string, at least 4 characters long,
   - `customerAddress`: string, can be null (for example, for take away)
   - `orderItems`: object, consists of:
-    - `itemName`: string, at least 3 characters long,
+    - `itemName`: string, at least 2 characters long,
     - `itemPrice`: integer, between 0 and 1000,
   - `totalCost`: integer, calculated automatically as a sum of items' prices,
   - `createdAt`: date, created automatically.
@@ -16,7 +16,7 @@
   - The values are checked by a validation middleware.
 
   - `orderItems` are assumed to be taken from the client solution. Maybe the menu is written on the page: picture, name, price. And when the user clicks on the picture, the name and the price are added to the request.
-- The logger, validation and error handler are implemented as a middleware.
+- The logger, validation and error handler are implemented as
 
 - For **getting all orders from the last day** was added an index for `createdAt` - to optimise the search. By "last day" are assumed last 24 hours. The results are given sorted from newest to oldest.
 
@@ -24,9 +24,7 @@
 
 1. If you do not have Docker, [download and install docker](https://docs.docker.com/get-docker/).
 
-2. Pull the latest mysql image: `docker pull mysql/mysql-server`
-
-3. Run a docker container with a new database:
+2. Run a docker container with a new database:
 
 `docker run -p 3306:3306 --name restaurantdb -e MYSQL_ROOT_PASSWORD=password -e MYSQL_ROOT_HOST=% -e MYSQL_DATABASE=restaurant_db -d mysql/mysql-server`
 
@@ -35,10 +33,10 @@
   - If there is an error "container is zombie and can not be killed" run `docker restart {DB_NAME}` and try to remove it again.
 
 
-4. Open the project. In the main folder run `npm install`
+3. Open the project. In the main folder run this command: `npm install`
 
-5. In the `server/db` folder run `npx sequelize-cli db:migrate`
-6. If you want to check manually how the program works with existing orders run `npx sequelize-cli db:seed:all` in `server/db` as well.
-7. In the main folder run `npm start`.
-8. Open `http://localhost:3000/api-docs/` and you will see the api description. You can use "try it out" and "execute" buttons. The are curl commands and request details as well.
-9. To run the unit tests run `npm test` in the main folder.
+4. To run the migration, run this command: `npm run db:migrate`
+5. If you want to check manually how the program works with existing orders, run this command: `npm run db:seed:all`.
+6. In the main folder run `npm start`.
+7. Open `http://localhost:3000/api-docs/` and you will see the api description. You can use "try it out" and "execute" buttons. The are curl commands and request details as well.
+8. To run the unit tests run `npm test` in the main folder.
