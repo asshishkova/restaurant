@@ -62,7 +62,7 @@ const createOrderSchema = {
       errorMessage: 'An item name should be a string'
     },
     isLength: {
-      errorMessage: 'An item name should be at least 2 characters long',
+      errorMessage: 'An item name should be at least 3 characters long',
       options: { min: 3 },
     },
     in: ['body']

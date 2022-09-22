@@ -1,4 +1,4 @@
-# restaurant
+# Restaurant
 
 ## Solution
 
@@ -15,7 +15,8 @@
 - For **saving a new order** all the values (except of `id`, `totalCost`, and `createdAt`) should be sent in a request body.
   - The values are checked by a validation middleware.
 
-  - `orderItems` are assumed to be taken from the client solution. Maybe the manu is written on the page: picture, name, price. And when the user click on the picture, the name and the price are added to the request.
+  - `orderItems` are assumed to be taken from the client solution. Maybe the menu is written on the page: picture, name, price. And when the user clicks on the picture, the name and the price are added to the request.
+- The logger, validation and error handler are implemented as a middleware.
 
 - For **getting all orders from the last day** was added an index for `createdAt` - to optimise the search. By "last day" are assumed last 24 hours. The results are given sorted from newest to oldest.
 
@@ -40,6 +41,4 @@
 6. If you want to check manually how the program works with existing orders run `npx sequelize-cli db:seed:all` in `server/db` as well.
 7. In the main folder run `npm start`.
 8. Open `http://localhost:3000/api-docs/` and you will see the api description. You can use "try it out" and "execute" buttons. The are curl commands and request details as well.
-9. To run the unit tests stop the server and run `npm test`.
-
-`npm run db:create:test`
+9. To run the unit tests run `npm test` in the main folder.

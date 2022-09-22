@@ -77,7 +77,7 @@ describe('Orders endpoints', () => {
     const res = await request(app)
       .post('/api/orders')
       .send({...newOrder, customerName: 'N'});
-    expectPropertyError(res, 'customerName', 'A customer name should be at least 2 characters long');
+    expectPropertyError(res, 'customerName', 'A customer name should be at least 3 characters long');
   });
 
   it('should not create an order without a customerPhone', async () => {
