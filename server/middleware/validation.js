@@ -10,7 +10,7 @@ function validateSchema(schema) {
     await validationMiddleware.run(req);
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      const errorsMessages = Error(errors.array().map(value => value.msg).join(", "));
+      const errorsMessages = Error(errors.array().map(value => value.msg).join(', '));
       // console.log(errorsMessages);
       return res.status(400).json({ errors: errors.mapped() })
     }
@@ -50,12 +50,20 @@ const createOrderSchema = {
     },
     in: ['body']
   },
+  orderItems: {
+    isArray: {
+      errorMessage: 'Order items should be an array'
+    },
+    notEmpty: {
+      errorMessage: 'Order items should contain at least 1 order item'
+    },
+  },
   'orderItems.*.itemName': {
     isString: {
       errorMessage: 'An item name should be a string'
     },
     isLength: {
-      errorMessage: 'An item name should be at least 3 characters long',
+      errorMessage: 'An item name should be at least 2 characters long',
       options: { min: 3 },
     },
     in: ['body']

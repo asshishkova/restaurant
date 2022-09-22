@@ -1,9 +1,9 @@
 const express = require('express');
-const { validateCreateOrderSchema } =  require("../middleware/validation.js");
+const { validateCreateOrderSchema } =  require('../middleware/validation.js');
 const {
   getLastDayOrders,
   postNewOrder,
-} = require("../controller/orders-controller");
+} = require('../controller/orders-controller');
 
 const ordersRouter = express.Router();
 

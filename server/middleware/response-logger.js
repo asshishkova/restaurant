@@ -20,8 +20,8 @@ function responseLoggerMiddleware(req, res, next) {
     }
     oldEnd.apply(res, arguments);
 
-    console.log("Response status:", res.statusCode, res.statusMessage);
-    console.log("Response:", JSON.stringify(body, null, 2));
+    console.log('Response status:', res.statusCode, res.statusMessage);
+    console.log('Response:', JSON.stringify(body, null, 2));
   };
 
   next();

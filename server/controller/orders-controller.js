@@ -1,5 +1,5 @@
-const ordersManager = require("../services/orders-manager");
-// const { ErrorIfNaN, ErrorIfNotFound } = require("../../common-errors");
+const ordersManager = require('../services/orders-manager');
+// const { ErrorIfNaN, ErrorIfNotFound } = require('../../common-errors');
 
 async function getLastDayOrders(req, res) {
   try {
@@ -7,7 +7,7 @@ async function getLastDayOrders(req, res) {
     if (!personalAnswers) personalAnswers = [];
     res.status(200).json(personalAnswers);
   } catch (error) {
-    res.status(500).json("Internal server error :)");
+    res.status(500).json('Internal server error :)');
   }
 
 }
@@ -21,7 +21,7 @@ async function postNewOrder(req, res) {
 //   if (!item) {
 //     const error = Error()
 //     error.statusCode = 404;
-//     error.message = "Not found";
+//     error.message = 'Not found';
 //     throw error;
 //   }
 // }

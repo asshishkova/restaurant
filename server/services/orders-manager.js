@@ -18,11 +18,18 @@ async function getLastDayOrders() {
 }
 
 async function postNewOrder(body) {
+  const orderItems = [];
+  for (const orderItem of body.orderItems) {
+    orderItems.push({
+      itemName: orderItem.itemName,
+      itemPrice: orderItem.itemPrice,
+    })
+  }
   const newOrder = await Order.create({
     customerName: body.customerName,
     customerPhone: body.customerPhone,
     customerAddress: body.customerAddress,
-    orderItems: body.orderItems,
+    orderItems: orderItems,
     totalCost: calculateTotalCost(body.orderItems)
   });
   return {

@@ -11,7 +11,7 @@ module.exports = {
     const ordersJSON = [];
     let dates = [];
     for (let i = 0; i < 10; i++) {
-      dates.push((i < 5) ? faker.date.past() : faker.date.recent());
+      dates.push((i < 5) ? faker.date.recent(10, '2022-09-21T00:00:00.000Z') : faker.date.recent(1));
     }
     dates = dates.sort((date1, date2) => date1 - date2);
     for(let i = 0; i < 10; i++){
@@ -22,8 +22,8 @@ module.exports = {
         customerPhone: faker.phone.phoneNumber('+972-5#-###-##-##'),
         customerAddress: faker.address.streetAddress(true),
         orderItems: JSON.stringify([
-          { itemName: "random dish", itemPrice: priceDish },
-          { itemName: "random drink", itemPrice: priceDrink }
+          { itemName: 'random dish', itemPrice: priceDish },
+          { itemName: 'random drink', itemPrice: priceDrink }
         ]),
         totalCost: priceDish + priceDrink,
         createdAt: dates[i],
