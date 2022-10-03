@@ -7,7 +7,7 @@ async function getLastDayOrders(req, res) {
     if (!personalAnswers) personalAnswers = [];
     res.status(200).json(personalAnswers);
   } catch (error) {
-    res.status(500).json('Internal server error :)');
+    res.status(500).json('Internal server error');
   }
 
 }
