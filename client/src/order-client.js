@@ -10,6 +10,23 @@ async function getRecentOrders() {
   }
 }
 
+async function postNewOrder(custName, phone, address, orderItems) {
+  try {
+    await axios.post(`/api/orders`,
+                      {
+                        customerName: custName,
+                        customerPhone: phone,
+                        customerAddress: address,
+                        orderItems: orderItems
+                      }
+                    );
+  }
+  catch (error) {
+    console.error(error);
+  }
+}
+
 export {
-  getRecentOrders
+  getRecentOrders,
+  postNewOrder
 }

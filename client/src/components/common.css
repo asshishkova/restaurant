@@ -1,4 +1,9 @@
-div {
+html, button {
   margin: 20px 20px;
   font-size: 30px;
+}
+
+button {
+  margin: 5px;
+  cursor: pointer;
 }

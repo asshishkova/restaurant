@@ -27,7 +27,7 @@ export default function RecentOrders() {
   const orderContent = (orderItems) => {
     return (
       <ul>
-        { orderItems.map( orderItem => <ul key={orderItem.itemName}> {orderItem.itemName} ₪{orderItem.itemPrice} </ul>) }
+        { orderItems.map( (orderItem, i) => <ul key={i}> {orderItem.itemName} ₪{orderItem.itemPrice} </ul>) }
       </ul>
     )
   }
