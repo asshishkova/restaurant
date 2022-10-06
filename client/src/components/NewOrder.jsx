@@ -8,10 +8,23 @@ export default function NewOrder() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [orderItems, setOrderItems] = useState([]);
+  const [successMessage, setSuccessMessage] = useState("");
 
-
-  const onOrderFormSubmitted = useCallback(async () => {
-    await postNewOrder(custName, phone, address, orderItems);
+  const onOrderFormSubmitted = useCallback(async (e) => {
+    e.preventDefault();
+    setCustName("");
+    setPhone("");
+    setAddress("");
+    setOrderItems([]);
+    try {
+      await postNewOrder(custName, phone, address, orderItems);
+      setSuccessMessage("Your order is on the way!");
+    } catch (error) {
+      setSuccessMessage("There is the problem with your order, please try again later.");
+    }
+    setTimeout(() => {
+      setSuccessMessage("")
+    }, 3000);
   },[custName, phone, address, orderItems]);
 
   const addOrderItem = useCallback(async (item) => {
@@ -60,6 +73,7 @@ export default function NewOrder() {
                                   onChange={(e) => setAddress(e.target.value)} />
                       </label> <br/> <br />
                       Order: { orderItems.map( (orderItem, i) => <ul key={i}> {orderItem.itemName} ₪{orderItem.itemPrice} </ul>) }
+                      <h3 className="message">{ successMessage }</h3>
                       <br />
                       {
                         orderItems.length >= 3 &&

@@ -38,6 +38,10 @@ button {
   width: 400px;
 }
 
+.message {
+  width: 400px;
+}
+
 .recent-order {
   background-color: darksalmon;
   border-radius: 12px;
