@@ -15,11 +15,12 @@ export default function RecentOrders() {
 
   const orderInfo = (order) => {
     return (
-      <div key={order.id}>
+      <div className="recent-order" key={order.id}>
         Client: {order.customerName} <br/>
         Sum: ₪{order.totalCost} <br/>
         Time: {order.createdAt.slice(11,16)} {order.createdAt.slice(0,10)} <br/>
         Details: {orderContent(order.orderItems)}
+        <br />
       </div>
     )
   }
@@ -34,6 +35,7 @@ export default function RecentOrders() {
 
   return (
     <div>
+      <h1>Recent orders</h1>
       <ul>
         { orders.map( order => orderInfo(order)) }
       </ul>
