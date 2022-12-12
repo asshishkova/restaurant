@@ -1,6 +1,6 @@
 # Restaurant
 
-Front End is in _front_ branch.
+Front End is in the _front_ branch.
 
 ## Back End
 
