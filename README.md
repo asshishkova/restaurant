@@ -1,6 +1,8 @@
 # Restaurant
 
-## Solution
+Front End is in _front_ branch.
+
+## Back End
 
 - Orders are saved as a table in a MySQL database. Each order contains:
   - `id`: integer, created automatically
